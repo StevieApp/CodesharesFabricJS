@@ -3,48 +3,87 @@
     <script type="text/javascript" src="fabric.min.js"></script>
     <script type="text/javascript" src="initializeObjects.js"></script>
     <script type="module">
-      // Add import(s) for your module(s) to here and modify event listeners
 
       document.querySelector('#spaceHorizontally').addEventListener('click',
         () => {
-          alert("EDIT ME")
+          console.log(canvas);
+          // console.log(document.querySelector('#objects').value);
+          clearCanvas(document.querySelector('#objects').value)
+          //document.querySelector('#spacing').value
+          var divisible = (canvas.width/4);
+          canvas._objects.forEach((element, index)=>{
+            canvas._objects[index].left = divisible*index + divisible/2;
+          });
+          canvas.renderAll();
         }
       )
 
       document.querySelector('#spaceVertically').addEventListener('click',
         () => {
-          alert("EDIT ME")
+          clearCanvas(document.querySelector('#objects').value)
+          canvas._objects.forEach((element, index)=>{
+            element.left = 100;
+            if(index == 0){
+              element.top = document.querySelector('#spacing').value*1;
+            } else{
+              var totalheit = 0;
+              for(var i=0; i<index;i++){
+                totalheit += canvas._objects[i].height;
+              }
+              element.top = document.querySelector('#spacing').value*(index+1)+totalheit;
+            }
+          });
+          canvas.renderAll();
         }
       )
 
       document.querySelector('#alignLeft').addEventListener('click',
         () => {
-          alert("EDIT ME")
+          clearCanvas(document.querySelector('#objects').value);
+          canvas._objects.forEach((element, index)=>{
+            element.left = 100;
+          });
+          canvas.renderAll();
         }
       )
 
-      //document.querySelector('#alignRight').addEventListener('click', (event) => handleClick(event))
       document.querySelector('#alignRight').addEventListener('click',
         () => {
-          alert("EDIT ME")
+          clearCanvas(document.querySelector('#objects').value);
+          canvas._objects.forEach((element, index)=>{
+            element.left = canvas.width-100;
+          });
+          canvas.renderAll();
         }
       )
 
       document.querySelector('#alignTop').addEventListener('click',
         () => {
-          alert("EDIT ME")
+          clearCanvas(document.querySelector('#objects').value);
+          canvas._objects.forEach((element, index)=>{
+            element.top = 30;
+          });
+          canvas.renderAll();
         }
       )
 
       document.querySelector('#alignMiddle').addEventListener('click',
         () => {
-          alert("EDIT ME")
+          clearCanvas(document.querySelector('#objects').value);
+          canvas._objects.forEach((element, index)=>{
+            element.left = canvas.width/2;
+          });
+          canvas.renderAll();
         }
       )
 
       document.querySelector('#alignBottom').addEventListener('click',
         () => {
-          alert("EDIT ME")
+          clearCanvas(document.querySelector('#objects').value);
+          canvas._objects.forEach((element, index)=>{
+            element.top = canvas.height-100;
+          });
+          canvas.renderAll();
         }
       )
     
@@ -52,7 +91,7 @@
   </head>
   <body onload="createCanvas()">
     <div>
-      <select name="objects" onchange="if (this.selectedIndex) clearCanvas(this.value)">
+      <select id="objects" name="objects" onchange="if (this.selectedIndex) clearCanvas(this.value)">
           <option value="-1" selected="selected">Please select object set to play with!</option>
           <option value="objects_1">Objects #1</option>
           <option value="objects_2">Objects #2</option>
@@ -60,15 +99,15 @@
         </select>
       <label>spacing</label><input id="spacing" value="10" type="number" style="margin-bottom: 20px;">
     </div>
-    <button id="spaceHorizontally">Space horizontally</button>
-    <button id="spaceVertically">Space vertically</button>
-
     <button id="alignLeft">Align left</button>
     <button id="alignRight">Align right</button>
 
     <button id="alignTop">Align top</button>
     <button id="alignMiddle">Align middle</button>
     <button id="alignBottom">Align bottom</button>
+
+    <button id="spaceHorizontally">Space horizontally</button>
+    <button id="spaceVertically">Space vertically</button>
     <canvas id="c" width="960" height="800"></canvas>
   <body>
 </html>
