@@ -41,7 +41,7 @@
         () => {
           clearCanvas(document.querySelector('#objects').value);
           canvas._objects.forEach((element, index)=>{
-            element.left = 100;
+            element.left = 100+document.querySelector('#spacing').value*1;
           });
           canvas.renderAll();
         }
@@ -51,7 +51,7 @@
         () => {
           clearCanvas(document.querySelector('#objects').value);
           canvas._objects.forEach((element, index)=>{
-            element.left = canvas.width-100;
+            element.left = canvas.width-100-document.querySelector('#spacing').value*1;
           });
           canvas.renderAll();
         }
@@ -61,7 +61,7 @@
         () => {
           clearCanvas(document.querySelector('#objects').value);
           canvas._objects.forEach((element, index)=>{
-            element.top = 30;
+            element.top = document.querySelector('#spacing').value*1;
           });
           canvas.renderAll();
         }
@@ -71,7 +71,7 @@
         () => {
           clearCanvas(document.querySelector('#objects').value);
           canvas._objects.forEach((element, index)=>{
-            element.left = canvas.width/2;
+            element.left = canvas.width/2+document.querySelector('#spacing').value*1;
           });
           canvas.renderAll();
         }
@@ -81,7 +81,7 @@
         () => {
           clearCanvas(document.querySelector('#objects').value);
           canvas._objects.forEach((element, index)=>{
-            element.top = canvas.height-100;
+            element.top = canvas.height-100-document.querySelector('#spacing').value*1;
           });
           canvas.renderAll();
         }
