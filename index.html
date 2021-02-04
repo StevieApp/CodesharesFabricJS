@@ -6,11 +6,13 @@
 
       document.querySelector('#spaceHorizontally').addEventListener('click',
         () => {
-          console.log(canvas);
+          //console.log(canvas);
           // console.log(document.querySelector('#objects').value);
           clearCanvas(document.querySelector('#objects').value)
           //document.querySelector('#spacing').value
-          var divisible = (canvas.width/4);
+          var highleft = mostleft(canvas._objects);
+          var vas = highleft[highleft.length-1].left+highleft[highleft.length-1].width;
+          var divisible = (vas/4);
           canvas._objects.forEach((element, index)=>{
             canvas._objects[index].left = divisible*index + divisible/2;
           });
@@ -18,19 +20,35 @@
         }
       )
 
+      function mostleft(array){
+        const array2 = JSON.parse(JSON.stringify(array))
+        return array2.sort((a,b)=>{
+            return a.left-b.left;
+          });
+      }
+
+      function mosttop(array){
+        const array2 = JSON.parse(JSON.stringify(array))
+        return array2.sort((a,b)=>{
+            return a.top-b.top;
+          });
+      }
+
       document.querySelector('#spaceVertically').addEventListener('click',
         () => {
           clearCanvas(document.querySelector('#objects').value)
+          var hightop = mosttop(canvas._objects)
+          var highleft = mostleft(canvas._objects)
           canvas._objects.forEach((element, index)=>{
-            element.left = 100;
+            element.left = highleft[0].left;
             if(index == 0){
-              element.top = document.querySelector('#spacing').value*1;
+              element.top = document.querySelector('#spacing').value*1+hightop[0].top;
             } else{
               var totalheit = 0;
               for(var i=0; i<index;i++){
                 totalheit += canvas._objects[i].height;
               }
-              element.top = document.querySelector('#spacing').value*(index+1)+totalheit;
+              element.top = document.querySelector('#spacing').value*(index+1)+totalheit+hightop[0].top;
             }
           });
           canvas.renderAll();
@@ -40,8 +58,10 @@
       document.querySelector('#alignLeft').addEventListener('click',
         () => {
           clearCanvas(document.querySelector('#objects').value);
+          var hightop = mosttop(canvas._objects)
+          var highleft = mostleft(canvas._objects)
           canvas._objects.forEach((element, index)=>{
-            element.left = 100+document.querySelector('#spacing').value*1;
+            element.left = highleft[0].left+100+document.querySelector('#spacing').value*1;
           });
           canvas.renderAll();
         }
@@ -50,8 +70,10 @@
       document.querySelector('#alignRight').addEventListener('click',
         () => {
           clearCanvas(document.querySelector('#objects').value);
+          var highleft = mostleft(canvas._objects)
           canvas._objects.forEach((element, index)=>{
-            element.left = canvas.width-100-document.querySelector('#spacing').value*1;
+            element.left = (highleft[highleft.length-1].left+highleft[highleft.length-1].width)
+                            -document.querySelector('#spacing').value*1;
           });
           canvas.renderAll();
         }
@@ -60,8 +82,10 @@
       document.querySelector('#alignTop').addEventListener('click',
         () => {
           clearCanvas(document.querySelector('#objects').value);
+          var hightop = mosttop(canvas._objects)
+          var highleft = mostleft(canvas._objects)
           canvas._objects.forEach((element, index)=>{
-            element.top = document.querySelector('#spacing').value*1;
+            element.top = document.querySelector('#spacing').value*1+hightop[0].top;
           });
           canvas.renderAll();
         }
@@ -70,8 +94,10 @@
       document.querySelector('#alignMiddle').addEventListener('click',
         () => {
           clearCanvas(document.querySelector('#objects').value);
+          var highleft = mostleft(canvas._objects);
+          var vas = highleft[highleft.length-1].left+highleft[highleft.length-1].width;
           canvas._objects.forEach((element, index)=>{
-            element.left = canvas.width/2+document.querySelector('#spacing').value*1;
+            element.left = vas/2+document.querySelector('#spacing').value*1;
           });
           canvas.renderAll();
         }
@@ -80,8 +106,10 @@
       document.querySelector('#alignBottom').addEventListener('click',
         () => {
           clearCanvas(document.querySelector('#objects').value);
+          var hightop = mosttop(canvas._objects);
+          var vas = hightop[hightop.length-1].top;
           canvas._objects.forEach((element, index)=>{
-            element.top = canvas.height-100-document.querySelector('#spacing').value*1;
+            element.top = vas-document.querySelector('#spacing').value*1;
           });
           canvas.renderAll();
         }
